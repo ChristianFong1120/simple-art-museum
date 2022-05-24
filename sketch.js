@@ -5,7 +5,7 @@ let arrowLeft;
 
 // Different museum views
 let museumView1, museumView2, museumView3, museumView4;
-let milesInfo;
+let milesInfo, murInfo, izInfo, stInfo;
 
 // Right and left arrow image variables & wow
 var right, left, wow, goBack;
@@ -30,6 +30,9 @@ function preload() {
 	arrowRight  = loadImage("img/right.png");
 	arrowLeft   = loadImage("img/left.png");
 	milesInfo	= loadImage("img/milesInfo.png");
+	murInfo		= loadImage("img/murakamiInfo.png");
+	izInfo		= loadImage("img/izettaInfo.png");
+	stInfo 		= loadImage("img/stephenInfo.png");
 
 	//song = loadSound('Miles_Davis_Flamenco_Sketches.mp3');
 }
@@ -270,11 +273,11 @@ function drawInfoBoard() {
 		if (personView == 1)
 			currInfo = milesInfo;
 		else if (personView == 2)
-			currInfo = milesInfo
+			currInfo = murInfo;
 		else if (personView == 3)
-			currInfo = milesInfo
+			currInfo = izInfo;
 		else
-			currInfo = milesInfo
+			currInfo = stInfo;
 
 		// Display larger image & info
 		tint(255, 255, 255);
