@@ -117,7 +117,7 @@ function drawMainWindow(isSetup, color) {
 	text('The Art Room', (w/2) - 15, (h/2) - 25);
 	textSize(20);
 	text('Within the museum you can move around to\n\
-		view art pieces that group 8 thought was \n\
+		view art pieces that group 8 thought were \n\
 		worthy to be within this digital museum.\n\
 					Press the button below to enter.', 
 		(w/2) - 115, (h/2) + 25);
