@@ -114,9 +114,9 @@ function drawMainWindow(isSetup, color) {
 	background(color);
 
 	// Create font size, & text
-	textSize(32);
-	text('The Art Room', (w/2) - 15, (h/2) - 25);
-	textSize(20);
+	//textSize(32);
+//	text('The Art Room', (w/2) - 15, (h/2) - 25);
+	//textSize(20);
 	/*text('Within the museum you can move around to\n\
 		view art pieces that group 8 thought were \n\
 		worthy to be within this digital museum.\n\
@@ -126,6 +126,7 @@ function drawMainWindow(isSetup, color) {
 	// Create button to swap scenes to museum & play music
 	startScreen = createImg("img/entrance.jpg");
 	startScreen.size(w, h);
+	startScreen.position(0,0);
 
 	if (isSetup){
 		enterImage = createImg("img/enter.png");
