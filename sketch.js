@@ -1,10 +1,11 @@
 let enterImage;
-
+let startScreen;
 let arrowRight;
 let arrowLeft;
 
 // Different museum views
-let museumView1, museumView2, museumView3, museumView4;
+let museumHall, museumCenter, museumView1, museumView2, museumView3, museumView4;
+
 let milesInfo, murInfo, izInfo, stInfo;
 
 // Right and left arrow image variables & wow
@@ -23,6 +24,8 @@ let currView;
 let song;
 
 function preload() {
+	museumHall = loadImage("img/hall.jpg");
+	museumCenter = loadImage("img/mainCenter.jpg");
 	museumView1 = loadImage("img/view1.png");
 	museumView2 = loadImage("img/view2.png");
 	museumView3 = loadImage("img/view3.png");
@@ -124,17 +127,18 @@ function drawMainWindow(isSetup, color) {
 		(w/2) - 115, (h/2) + 25);*/
 
 	// Create button to swap scenes to museum & play music
-	startScreen = createImg("img/entrance.jpg");
+	/*startScreen = createImg("img/entrance.jpg");
 	startScreen.size(w, h);
 	startScreen.position(0,0);
-
+	startScreen.mousePressed(changeButtonPress);
+	startScreen.mouseReleased(releaseButtonPress);*/
 	if (isSetup){
-		enterImage = createImg("img/enter.png");
-		enterImage.size(300, 170)
+		startScreen = createImg("img/entrance.jpg");
+		startScreen.size(w, h);
 	}
-	enterImage.position((w/2) - 60, h/2 + 100);
-	enterImage.mousePressed(changeButtonPress);
-	enterImage.mouseReleased(releaseButtonPress);
+	startScreen.position(0,0);
+	startScreen.mousePressed(changeButtonPress);
+	startScreen.mouseReleased(releaseButtonPress);
 }
 
 // Change color on button press
@@ -152,13 +156,14 @@ function releaseButtonPress() {
 	drawMuseumWindow()
 }
 
-function drawMuseumWindow(view=museumView1) {
+function drawMuseumWindow(view=museumHall) {
 	console.log("This should change scenes");
 	currView = view;
 
 	inMuseum = true;
-	background(51);
-	enterImage.remove();
+	//background(51);
+	//enterImage.remove();
+	startScreen.remove();
 
 	// Play Miles Davis - Flamenco Sketches
 	//if (!song.isPlaying()) {
@@ -167,8 +172,10 @@ function drawMuseumWindow(view=museumView1) {
 
 	// Add image of the floor only when first setting up museum
 	image(view, 0, 0, windowWidth, windowHeight);
-
-	if (museumSetup){
+	
+	goBack = createImg("img/goBack.png");
+	goBack.hide();
+	/*if (museumSetup){
 		right = createImg("img/right.png");
 
 		left = createImg("img/left.png");
@@ -183,7 +190,7 @@ function drawMuseumWindow(view=museumView1) {
 		goBack = createImg("img/goBack.png");
 		goBack.hide();
 
-	}
+	}*/
 	right.size(.2 * width, .2 * height);
 	right.position(.70 * width, .80 * height);
 
