@@ -33,6 +33,7 @@ function preload() {
 	murInfo		= loadImage("img/murakamiInfo.png");
 	izInfo		= loadImage("img/izettaInfo.png");
 	stInfo 		= loadImage("img/stephenInfo.png");
+	museumEntrance = loadImage("img/entrance.jpg");
 
 	//song = loadSound('Miles_Davis_Flamenco_Sketches.mp3');
 }
@@ -54,7 +55,7 @@ function draw() {
 	var top = height *.22;
 	var bottom = height * .5;
 
-	if (inMuseum && mouseX >= leftWidth && mouseX < rightWidth 
+	if (inMuseum && mouseX >= leftWidth && mouseX < rightWidth
 		&& mouseY >= top && mouseY <= bottom){
 		// Draw 3 'WOW' lines when hovering
 		wow.show();
@@ -76,7 +77,7 @@ function mouseClicked() {
 	var top = height *.22;
 	var bottom = height * .5;
 
-	if (!inInfoView && inMuseum && mouseX >= leftWidth 
+	if (!inInfoView && inMuseum && mouseX >= leftWidth
 		&& mouseX < rightWidth && mouseY >= top && mouseY <= bottom){
 		// Draw 3 'WOW' lines when hovering
 		wow.hide();
@@ -119,10 +120,12 @@ function drawMainWindow(isSetup, color) {
 	text('Within the museum you can move around to\n\
 		view art pieces that group 8 thought were \n\
 		worthy to be within this digital museum.\n\
-					Press the button below to enter.', 
+					Press the button below to enter.',
 		(w/2) - 115, (h/2) + 25);
 
 	// Create button to swap scenes to museum & play music
+//	startScreen = createImg("img/entrance.jpg");
+//	startScreen.size(w, h);
 	if (isSetup){
 		enterImage = createImg("img/enter.png");
 		enterImage.size(300, 170)
