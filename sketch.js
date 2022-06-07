@@ -71,10 +71,10 @@ function preload() {
 	museumView4 = loadImage("img/view4.png");
 	arrowRight  = loadImage("img/right.png");
 	arrowLeft   = loadImage("img/left.png");
-	milesInfo	= loadImage("img/milesInfo.png");
-	murInfo		= loadImage("img/murakamiInfo.png");
-	izInfo		= loadImage("img/izettaInfo.png");
-	stInfo 		= loadImage("img/stephenInfo.png");
+	milesInfo	= loadImage("img/sebZoom.png");
+	murInfo		= loadImage("img/chrisZoom.png");
+	izInfo		= loadImage("img/izettaZoom.png");
+	stInfo 		= loadImage("img/stephenZoom.png");
 	museumEntrance = loadImage("img/entrance.jpg");
 	artRoom1 = loadImage("img/artRoom1.jpg");
 	artRoom2 = loadImage("img/artRoom2.jpg");
@@ -84,8 +84,8 @@ function preload() {
 	stephenRoom = loadImage("img/stephenRoom.jpg");
 	izettaRoom = loadImage("img/izettaRoom.jpg");
 	sebRoom = loadImage("img/sebRoom.jpg");
+	song = loadSound('music/Miles_Davis_Flamenco_Sketches.mp3');
 
-	//song = loadSound('Miles_Davis_Flamenco_Sketches.mp3');
 }
 
 function setup() {
@@ -134,7 +134,7 @@ function drawMainWindow(isSetup, color) {
 	var h = windowHeight;
 
 	// Sets background color
-	background(color);
+	//background(color);
 	if (isSetup){
 		startScreen = createImg("img/entrance.jpg");
 		startScreen.size(w, h);
@@ -165,19 +165,16 @@ function drawMuseumWindow( view=museumHall) {
 	currView = view;
 
 	inMuseum = true;
-	//background(51);
-	//enterImage.remove();
+	console.log(currView);
 	startScreen.remove();
 
-	//leftRoom1.remove();
-	//leftRoom2.remove();
-	//centerRoom.remove();
+
 
 	// Play Miles Davis - Flamenco Sketches
 	//if (!song.isPlaying()) {
 	//	//song.play();
 	//}
-
+	currView = view;
 	// Add image of the floor only when first setting up museum
 	image(view, 0, 0, windowWidth, windowHeight);
 	if(view == museumHall){
@@ -222,11 +219,14 @@ function drawMuseumWindow( view=museumHall) {
 		room4 = createImg("img/blank.png");
 		room5 = createImg("img/blank.png");
 
+		musicBox = createImg("img/blank.jpg");
+
 		room1.size(.07 * width, .3 * height);
 		room2.size(.05 * width, .25 * height);
 		room3.size(.1 * width, .20 * height);
 		room4.size(.1 * width, .20 * height);
 		room5.size(.05 * width, .20 * height);
+		musicBox.size(.15 * width, .15 * height);
 
 
 		room1.position(.035 * width,.4 * height);
@@ -234,24 +234,47 @@ function drawMuseumWindow( view=museumHall) {
 		room3.position(.28 * width,.46 * height);
 		room4.position(.78 * width,.46 * height);
 		room5.position(.93 * width,.46 * height);
+		musicBox.position(.5 * width, .5 * height);
 
 		room1.mousePressed(changeChris);
 		room2.mousePressed(changeSeb);
 		room3.mousePressed(changeIzetta);
 		room4.mousePressed(changeSte);
+		musicBox.mousePressed(toggleSong);
 		//room5.mousePressed(changeSale);
 
 	}
 	else if(view == izettaRoom){
+		button = createImg("img/blank.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+		button.mousePressed(drawInfoBoard);
 		back.mousePressed(goCenter);
+
 	}
 	else if(view == sebRoom){
+		button = createImg("img/blank.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+		button.mousePressed(drawInfoBoard);
 		back.mousePressed(goCenter);
 	}
 	else if(view == chrisRoom){
+		button = createImg("img/blank.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+		button.mousePressed(drawInfoBoard);
 		back.mousePressed(goCenter);
 	}
 	else if(view == stephenRoom){
+		button = createImg("img/blank.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+		button.mousePressed(drawInfoBoard);
 		back.mousePressed(goCenter);
 	}
 	else if (view == artRoom1){
@@ -295,6 +318,15 @@ function drawMuseumWindow( view=museumHall) {
 		rotateZ(time / 1234);
 		text('p5.js', 0, 0);
 	}*/
+}
+
+function toggleSong(){
+	if (!song.isPlaying()) {
+		song.play();
+	}
+	else{
+		song.stop();
+	}
 }
 function changeSale(){
 	room1.remove();
@@ -348,6 +380,7 @@ function goCenter(){
 	drawMuseumWindow(museumCenter);
 }
 function goHall(){
+	musicBox.remove();
 	room1.remove();
 	room2.remove();
 	room3.remove();
@@ -368,6 +401,7 @@ function goEntrance(){
 
 function changeSte(){
 	room1.remove();
+	musicBox.remove();
 	room2.remove();
 	room3.remove();
 	room4.remove();
@@ -378,6 +412,7 @@ function changeSte(){
 function changeSeb(){
 	room1.remove();
 	room2.remove();
+	musicBox.remove();
 	room3.remove();
 	room4.remove();
 	room5.remove();
@@ -387,6 +422,7 @@ function changeSeb(){
 function changeIzetta(){
 	room1.remove();
 	room2.remove();
+	musicBox.remove();
 	room3.remove();
 	room5.remove();
 	room4.remove();
@@ -397,6 +433,7 @@ function changeChris(){
 	room1.remove();
 	room2.remove();
 	room3.remove();
+	musicBox.remove();
 	room4.remove();
 	room5.remove();
 	drawMuseumWindow(chrisRoom);
@@ -463,11 +500,10 @@ function drawInfoBoard() {
 	inInfoView = true;
 
 	// Hide l/r buttons
-	right.hide();
-	left.hide();
 
-	goBack.size(.2 * width, .2 * height);
-	goBack.position(.4 * width, .8 * height);
+	goback = createImg("img/back.png");
+	goback.size(.2 * width, .2 * height);
+	goback.position(.4 * width, .8 * height);
 
 	if (firstInfoView){
 		firstInfoView = false;
@@ -477,16 +513,15 @@ function drawInfoBoard() {
 		tint(0, 153, 204, 126);
 		image(currView, 0, 0, windowWidth, windowHeight);
 
-		// Show goBack Button
-		goBack.show();
+
 
 		let currInfo;
-		if (personView == 1)
-			currInfo = milesInfo;
-		else if (personView == 2)
+		if (currView == chrisRoom)
 			currInfo = murInfo;
-		else if (personView == 3)
+		else if (currView == izettaRoom)
 			currInfo = izInfo;
+		else if (currView == sebRoom)
+			currInfo = milesInfo;
 		else
 			currInfo = stInfo;
 
@@ -494,6 +529,7 @@ function drawInfoBoard() {
 		tint(255, 255, 255);
 		image(currInfo, 0, 0, windowWidth, windowHeight - 200);
 	}
+	goback.mousePressed(goBackAction);
 
 }
 
@@ -502,10 +538,10 @@ function goBackAction() {
 	inMuseum = true;
 	firstInfoView = true;
 
-	right.show();
-	left.show();
+	//right.show();
+	//left.show();
 	tint(255, 255, 255);
 
-	goBack.hide();
+	goback.remove	();
 	drawMuseumWindow(currView);
 }
