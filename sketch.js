@@ -410,8 +410,8 @@ function drawInfoBoard() {
 	// Hide l/r buttons
 
 	goback = createImg("img/back.png");
-	goback.size(.2 * width, .2 * height);
-	goback.position(.4 * width, .8 * height);
+	goback.size(.05 * width, .1 * height);
+	goback.position(.5 * width, .8 * height);
 
 	if (firstInfoView){
 		firstInfoView = false;
