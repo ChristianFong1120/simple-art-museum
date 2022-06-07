@@ -28,33 +28,24 @@ let song;
 function getAjax(){
 // Using the core $.ajax() method
 $.ajax({
-    // The URL for the request (from the api docs)
-    url: "https://poetrydb.org/author,title/Shakespeare;Sonnet",
-    // The data to send (will be converted to a query string)
-    data: {
-            // here is where any data required by the api
-            //   goes (check the api docs)
-            //id: 123,
-            //api_key: "blahblahblah",
-          },
-    // Whether this is a POST or GET request
-    type: "GET",
-    // The type of data we expect back
-    dataType : "json",
-    // What do we do when the api call is successful
-    //   all the action goes in here
-    success: function(data) {
-        // do stuff
 
+    url: "https://poetrydb.org/author,title/Shakespeare;Sonnet",
+
+    data: {
+
+          },
+
+    type: "GET",
+
+    dataType : "json",
+
+    success: function(data) {
         console.log(data[calls].lines);
 				poem = data[calls].lines;
-
-
-
     },
-    // What we do if the api call fails
+
     error: function (jqXHR, textStatus, errorThrown) {
-        // do stuff
+
         console.log("Error:", textStatus, errorThrown);
     }
 })
@@ -264,7 +255,7 @@ function drawMuseumWindow( view=museumHall) {
 
 
 		textSize(20);
-		text(poem, .35 *width, .2* height, 500, 1000);
+		text(poem, .45 *width, .45* height, 500, 1000);
 		box
 
 		button = createImg("img/blank.png");
@@ -410,51 +401,6 @@ function changeToCenterRoom() {
 
 function goInRoom(src, dst){
 	image(dst, 0, 0, windowWidth, windowHeight);
-}
-
-function moveRight() {
-	console.log("RIGHT");
-
-	// If view 1 move to view 2
-	if (personView == 1) {
-		personView = 2;
-		drawMuseumWindow(museumView2);
-	}
-	// If view 2 move to view 3
-	else if (personView == 2){
-		personView = 3;
-		drawMuseumWindow(museumView3);
-	}
-	else if (personView == 3) {
-		personView = 4;
-		drawMuseumWindow(museumView4);
-	}
-	else {
-		personView = 1;
-		drawMuseumWindow();
-	}
-}
-
-function moveLeft() {
-	console.log("LEFT");
-
-	// If view 1 move to view 4
-	if (personView == 1) {
-		personView = 4;
-		drawMuseumWindow(museumView4);
-	}
-	else if (personView == 2) {
-		personView = 1;
-		drawMuseumWindow();
-	}
-	else if (personView == 3) {
-		personView = 2;
-		drawMuseumWindow(museumView2);
-	}
-	else {
-		personView = 3;
-		drawMuseumWindow(museumView3);
-	}
 }
 
 
