@@ -255,7 +255,7 @@ function drawMuseumWindow( view=museumHall) {
 
 
 		textSize(20);
-		text(poem, .45 *width, .45* height, 500, 1000);
+		text(poem, .35 *width, .35* height, 500, 1000);
 		box
 
 		button = createImg("img/blank.png");
