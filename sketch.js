@@ -6,7 +6,7 @@ poem = "A poem will appear here!";
 calls = 0;
 let lastLocation;
 // Different museum views
-let museumHall, museumCenter, museumView1, museumView2, museumView3, museumView4, chrisRoom;
+let museumHall, museumCenter,chrisRoom;
 
 let milesInfo, murInfo, izInfo, stInfo;
 
@@ -88,12 +88,12 @@ function preload() {
 
 }
 
+
 function setup() {
 	var w = windowWidth;
 	var h = windowHeight;
 	// Sets up place where drawings are done
 	createCanvas(windowWidth - 15, windowHeight - 25);
-
 	drawMainWindow(true, 220);
 
 
@@ -140,26 +140,11 @@ function drawMainWindow(isSetup, color) {
 		startScreen.size(w, h);
 	}
 	startScreen.position(0,0);
-	startScreen.mousePressed(changeButtonPress);
-	startScreen.mouseReleased(releaseButtonPress);
+	startScreen.mousePressed(drawMuseumWindow);
+
 }
 
-// Change color on button press
-function changeButtonPress() {
-	console.log("in");
-	//enterImage.hide();
-	//drawMainWindow(false, '#fae')
-}
 
-// Revert color on button press
-function releaseButtonPress() {
-	console.log("OUT");
-	//drawMainWindow(false, 220)
-
-	drawMuseumWindow()
-}
-
-var firstInCenter = true;
 function drawMuseumWindow( view=museumHall) {
 	console.log("This should change scenes");
 	currView = view;
@@ -169,11 +154,6 @@ function drawMuseumWindow( view=museumHall) {
 	startScreen.remove();
 
 
-
-	// Play Miles Davis - Flamenco Sketches
-	//if (!song.isPlaying()) {
-	//	//song.play();
-	//}
 	currView = view;
 	// Add image of the floor only when first setting up museum
 	image(view, 0, 0, windowWidth, windowHeight);
@@ -193,26 +173,16 @@ function drawMuseumWindow( view=museumHall) {
 		back.position(.5 * width, .9 * height);
 		leftRoom2.position(.32222 * width, .533 * height);
 
-		/*leftRoom1.remove();
-		leftRoom2.remove();
-		centerRoom.remove();*/
 		back.mousePressed(goEntrance);
 		centerRoom.position(.36 * width, .52 * height);
 		centerRoom.mousePressed(changeToCenterRoom);
 		leftRoom1.mousePressed(changeAPI1);
 		leftRoom2.mousePressed(changeAPI2);
 
-
 	}
 	else if(view == museumCenter){
 		console.log("in create center")
-		/*leftRoom1.remove();
-		leftRoom2.remove();
-		centerRoom.remove();*/
-
 		back.mousePressed(goHall);
-
-
 		room1 = createImg("img/blank.png");
 		room2 = createImg("img/blank.png");
 		room3 = createImg("img/blank.png");
@@ -227,7 +197,6 @@ function drawMuseumWindow( view=museumHall) {
 		room4.size(.1 * width, .20 * height);
 		room5.size(.05 * width, .20 * height);
 		musicBox.size(.15 * width, .15 * height);
-
 
 		room1.position(.035 * width,.4 * height);
 		room2.position(.185 * width,.43 * height);
@@ -308,16 +277,8 @@ function drawMuseumWindow( view=museumHall) {
 		button.mousePressed(refresh2);
 
 	}
-	/*
-	else if(view == museumSale){
-		createCanvas(100, 100, WEBGL);
-	  textFont(myFont);
-		background(0);
-		let time = millis();
-		rotateX(time / 1000);
-		rotateZ(time / 1234);
-		text('p5.js', 0, 0);
-	}*/
+
+
 }
 
 function toggleSong(){
@@ -328,6 +289,7 @@ function toggleSong(){
 		song.stop();
 	}
 }
+
 function changeSale(){
 	room1.remove();
 	room2.remove();
