@@ -435,7 +435,7 @@ function drawInfoBoard() {
 
 		// Display larger image & info
 		tint(255, 255, 255);
-		image(currInfo, 0, 0, windowWidth, windowHeight - 200);
+		image(currInfo, 0, 0, windowWidth, windowHeight );
 	}
 	goback.mousePressed(goBackAction);
 
