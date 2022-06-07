@@ -62,6 +62,7 @@ $.ajax({
 
 
 function preload() {
+
 	museumHall = loadImage("img/hall.jpg");
 	museumCenter = loadImage("img/mainCenter.jpg");
 	museumView1 = loadImage("img/view1.png");
@@ -77,6 +78,7 @@ function preload() {
 	museumEntrance = loadImage("img/entrance.jpg");
 	artRoom1 = loadImage("img/artRoom1.jpg");
 	artRoom2 = loadImage("img/artRoom2.jpg");
+	museumSale = loadImage("img/artRoom.jpg");
 	chrisRoom = loadImage("img/murakamiRoom.jpg");
 	random = loadImage("https://random.imagecdn.app/500/150");
 	stephenRoom = loadImage("img/stephenRoom.jpg");
@@ -93,6 +95,8 @@ function setup() {
 	createCanvas(windowWidth - 15, windowHeight - 25);
 
 	drawMainWindow(true, 220);
+
+
 }
 
 function draw() {
@@ -177,9 +181,9 @@ function drawMuseumWindow( view=museumHall) {
 	// Add image of the floor only when first setting up museum
 	image(view, 0, 0, windowWidth, windowHeight);
 	if(view == museumHall){
-		leftRoom1 = createImg("img/blankk.png");
-		leftRoom2 = createImg("img/blankk.png");
-		centerRoom = createImg("img/blankk.png");
+		leftRoom1 = createImg("img/blank.png");
+		leftRoom2 = createImg("img/blank.png");
+		centerRoom = createImg("img/blank.png");
 		back = createImg("img/back.png");
 
 		leftRoom1.size(.05 * width, .25 * height);
@@ -212,11 +216,11 @@ function drawMuseumWindow( view=museumHall) {
 		back.mousePressed(goHall);
 
 
-		room1 = createImg("img/blankk.png");
-		room2 = createImg("img/blankk.png");
-		room3 = createImg("img/blankk.png");
-		room4 = createImg("img/blankk.png");
-		room5 = createImg("img/blankk.png");
+		room1 = createImg("img/blank.png");
+		room2 = createImg("img/blank.png");
+		room3 = createImg("img/blank.png");
+		room4 = createImg("img/blank.png");
+		room5 = createImg("img/blank.png");
 
 		room1.size(.07 * width, .3 * height);
 		room2.size(.05 * width, .25 * height);
@@ -235,7 +239,7 @@ function drawMuseumWindow( view=museumHall) {
 		room2.mousePressed(changeSeb);
 		room3.mousePressed(changeIzetta);
 		room4.mousePressed(changeSte);
-		room5.mousePressed(changeSale);
+		//room5.mousePressed(changeSale);
 
 	}
 	else if(view == izettaRoom){
@@ -255,7 +259,7 @@ function drawMuseumWindow( view=museumHall) {
 		temp = createImg("https://source.unsplash.com/random/200x200?sig=" + calls);
 		temp.size(.265 *width, .4* height);
 
-		button = createImg("img/blankk.png");
+		button = createImg("img/blank.png");
 		button.size(.11 * width, .23 * height);
 
 		button.position(.70 * width, .35 * height);
@@ -271,7 +275,7 @@ function drawMuseumWindow( view=museumHall) {
 		text(poem, .35 *width, .2* height, 500, 1000);
 		box
 
-		button = createImg("img/blankk.png");
+		button = createImg("img/blank.png");
 		button.size(.11 * width, .23 * height);
 
 		button.position(.70 * width, .35 * height);
@@ -281,8 +285,25 @@ function drawMuseumWindow( view=museumHall) {
 		button.mousePressed(refresh2);
 
 	}
+	/*
+	else if(view == museumSale){
+		createCanvas(100, 100, WEBGL);
+	  textFont(myFont);
+		background(0);
+		let time = millis();
+		rotateX(time / 1000);
+		rotateZ(time / 1234);
+		text('p5.js', 0, 0);
+	}*/
 }
-
+function changeSale(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+	room5.remove();
+	drawMuseumWindow(museumSale);
+}
 function refresh2(){
 	if(calls > 30){
 		calls = 0;
@@ -331,6 +352,7 @@ function goHall(){
 	room2.remove();
 	room3.remove();
 	room4.remove();
+	room5.remove();
 	back.remove();
 	drawMuseumWindow(museumHall);
 }
@@ -349,6 +371,7 @@ function changeSte(){
 	room2.remove();
 	room3.remove();
 	room4.remove();
+	room5.remove();
 	drawMuseumWindow(stephenRoom);
 }
 
@@ -357,6 +380,7 @@ function changeSeb(){
 	room2.remove();
 	room3.remove();
 	room4.remove();
+	room5.remove();
 	drawMuseumWindow(sebRoom);
 }
 
@@ -364,6 +388,7 @@ function changeIzetta(){
 	room1.remove();
 	room2.remove();
 	room3.remove();
+	room5.remove();
 	room4.remove();
 	drawMuseumWindow(izettaRoom);
 }
@@ -373,7 +398,7 @@ function changeChris(){
 	room2.remove();
 	room3.remove();
 	room4.remove();
-
+	room5.remove();
 	drawMuseumWindow(chrisRoom);
 }
 
