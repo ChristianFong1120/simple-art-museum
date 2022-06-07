@@ -254,7 +254,7 @@ function drawMuseumWindow( view=museumHall) {
 	else if (view == artRoom2){
 
 
-		textSize(20);
+		textSize(15);
 		text(poem, .35 *width, .2* height, 500, 1000);
 		box
 
