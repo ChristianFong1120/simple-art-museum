@@ -408,7 +408,7 @@ function drawInfoBoard() {
 	inInfoView = true;
 
 	// Hide l/r buttons
-
+	back.hide();
 	goback = createImg("img/back.png");
 	goback.size(.05 * width, .1 * height);
 	goback.position(.5 * width, .8 * height);
@@ -451,5 +451,6 @@ function goBackAction() {
 	tint(255, 255, 255);
 
 	goback.remove	();
+	back.show();
 	drawMuseumWindow(currView);
 }
