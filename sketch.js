@@ -2,9 +2,11 @@ let enterImage;
 let startScreen;
 let arrowRight;
 let arrowLeft;
-
+poem = "A poem will appear here!";
+calls = 0;
+let lastLocation;
 // Different museum views
-let museumHall, museumCenter, museumView1, museumView2, museumView3, museumView4;
+let museumHall, museumCenter, museumView1, museumView2, museumView3, museumView4, chrisRoom;
 
 let milesInfo, murInfo, izInfo, stInfo;
 
@@ -23,6 +25,42 @@ let currView;
 // variable for mp3
 let song;
 
+function getAjax(){
+// Using the core $.ajax() method
+$.ajax({
+    // The URL for the request (from the api docs)
+    url: "https://poetrydb.org/author,title/Shakespeare;Sonnet",
+    // The data to send (will be converted to a query string)
+    data: {
+            // here is where any data required by the api
+            //   goes (check the api docs)
+            //id: 123,
+            //api_key: "blahblahblah",
+          },
+    // Whether this is a POST or GET request
+    type: "GET",
+    // The type of data we expect back
+    dataType : "json",
+    // What do we do when the api call is successful
+    //   all the action goes in here
+    success: function(data) {
+        // do stuff
+
+        console.log(data[calls].lines);
+				poem = data[calls].lines;
+
+
+
+    },
+    // What we do if the api call fails
+    error: function (jqXHR, textStatus, errorThrown) {
+        // do stuff
+        console.log("Error:", textStatus, errorThrown);
+    }
+})
+}
+
+
 function preload() {
 	museumHall = loadImage("img/hall.jpg");
 	museumCenter = loadImage("img/mainCenter.jpg");
@@ -37,6 +75,13 @@ function preload() {
 	izInfo		= loadImage("img/izettaInfo.png");
 	stInfo 		= loadImage("img/stephenInfo.png");
 	museumEntrance = loadImage("img/entrance.jpg");
+	artRoom1 = loadImage("img/artRoom1.jpg");
+	artRoom2 = loadImage("img/artRoom2.jpg");
+	chrisRoom = loadImage("img/murakamiRoom.jpg");
+	random = loadImage("https://random.imagecdn.app/500/150");
+	stephenRoom = loadImage("img/stephenRoom.jpg");
+	izettaRoom = loadImage("img/izettaRoom.jpg");
+	sebRoom = loadImage("img/sebRoom.jpg");
 
 	//song = loadSound('Miles_Davis_Flamenco_Sketches.mp3');
 }
@@ -52,20 +97,6 @@ function setup() {
 
 function draw() {
 
-	// Check if mouse is hovering over a painting
-	var leftWidth = width *.3;
-	var rightWidth = width *.78;
-	var top = height *.22;
-	var bottom = height * .5;
-
-	if (inMuseum && mouseX >= leftWidth && mouseX < rightWidth
-		&& mouseY >= top && mouseY <= bottom){
-		// Draw 3 'WOW' lines when hovering
-		wow.show();
-	}
-	else if (inMuseum) {
-		wow.hide();
-	}
 }
 
 
@@ -74,21 +105,6 @@ function mouseClicked() {
 	//	song.stop();
 	//}
 
-	// Check if in picture space
-	var leftWidth = width *.3;
-	var rightWidth = width *.78;
-	var top = height *.22;
-	var bottom = height * .5;
-
-	if (!inInfoView && inMuseum && mouseX >= leftWidth
-		&& mouseX < rightWidth && mouseY >= top && mouseY <= bottom){
-		// Draw 3 'WOW' lines when hovering
-		wow.hide();
-
-		// Need to switch back after coming back from info board
-		inMuseum = false;
-		drawInfoBoard();
-	}
 }
 
 // Whenever user changes window size, resize canvas
@@ -115,23 +131,6 @@ function drawMainWindow(isSetup, color) {
 
 	// Sets background color
 	background(color);
-
-	// Create font size, & text
-	//textSize(32);
-//	text('The Art Room', (w/2) - 15, (h/2) - 25);
-	//textSize(20);
-	/*text('Within the museum you can move around to\n\
-		view art pieces that group 8 thought were \n\
-		worthy to be within this digital museum.\n\
-					Press the button below to enter.',
-		(w/2) - 115, (h/2) + 25);*/
-
-	// Create button to swap scenes to museum & play music
-	/*startScreen = createImg("img/entrance.jpg");
-	startScreen.size(w, h);
-	startScreen.position(0,0);
-	startScreen.mousePressed(changeButtonPress);
-	startScreen.mouseReleased(releaseButtonPress);*/
 	if (isSetup){
 		startScreen = createImg("img/entrance.jpg");
 		startScreen.size(w, h);
@@ -145,18 +144,19 @@ function drawMainWindow(isSetup, color) {
 function changeButtonPress() {
 	console.log("in");
 	//enterImage.hide();
-	drawMainWindow(false, '#fae')
+	//drawMainWindow(false, '#fae')
 }
 
 // Revert color on button press
 function releaseButtonPress() {
 	console.log("OUT");
-	drawMainWindow(false, 220)
+	//drawMainWindow(false, 220)
 
 	drawMuseumWindow()
 }
 
-function drawMuseumWindow(view=museumHall) {
+var firstInCenter = true;
+function drawMuseumWindow( view=museumHall) {
 	console.log("This should change scenes");
 	currView = view;
 
@@ -165,6 +165,10 @@ function drawMuseumWindow(view=museumHall) {
 	//enterImage.remove();
 	startScreen.remove();
 
+	//leftRoom1.remove();
+	//leftRoom2.remove();
+	//centerRoom.remove();
+
 	// Play Miles Davis - Flamenco Sketches
 	//if (!song.isPlaying()) {
 	//	//song.play();
@@ -172,47 +176,217 @@ function drawMuseumWindow(view=museumHall) {
 
 	// Add image of the floor only when first setting up museum
 	image(view, 0, 0, windowWidth, windowHeight);
-	
-	goBack = createImg("img/goBack.png");
-	goBack.hide();
-	/*if (museumSetup){
-		right = createImg("img/right.png");
+	if(view == museumHall){
+		leftRoom1 = createImg("img/blankk.png");
+		leftRoom2 = createImg("img/blankk.png");
+		centerRoom = createImg("img/blankk.png");
+		back = createImg("img/back.png");
 
-		left = createImg("img/left.png");
+		leftRoom1.size(.05 * width, .25 * height);
+		leftRoom2.size(.025 * width, .15 * height);
+		centerRoom.size(.15 * width, .12 * height);
 
-		museumSetup = false;
+		back.size(.05*width, .1 * height);
 
-		// draw & hide wow lines
-		wow = createImg("img/wow.png");
-		wow.hide();
+		leftRoom1.position(.25 * width, .5 * height);
+		back.position(.5 * width, .9 * height);
+		leftRoom2.position(.32222 * width, .533 * height);
 
-		// Draw go back button & hide it
-		goBack = createImg("img/goBack.png");
-		goBack.hide();
+		/*leftRoom1.remove();
+		leftRoom2.remove();
+		centerRoom.remove();*/
+		back.mousePressed(goEntrance);
+		centerRoom.position(.36 * width, .52 * height);
+		centerRoom.mousePressed(changeToCenterRoom);
+		leftRoom1.mousePressed(changeAPI1);
+		leftRoom2.mousePressed(changeAPI2);
 
-	}*/
-	right.size(.2 * width, .2 * height);
-	right.position(.70 * width, .80 * height);
 
-	left.size(.2 * width, .2 * height);
-	left.position(.2 * width, .80 * height);
+	}
+	else if(view == museumCenter){
+		console.log("in create center")
+		/*leftRoom1.remove();
+		leftRoom2.remove();
+		centerRoom.remove();*/
 
-	wow.size(.2 * width, .2 * height);
-	wow.position(.4 * width, .04 * height);
+		back.mousePressed(goHall);
 
-	goBack.size(.2 * width, .2 * height);
-	goBack.position(.4 * width, .8 * height);
 
-	// Move view right
-	right.mousePressed(moveRight);
+		room1 = createImg("img/blankk.png");
+		room2 = createImg("img/blankk.png");
+		room3 = createImg("img/blankk.png");
+		room4 = createImg("img/blankk.png");
+		room5 = createImg("img/blankk.png");
 
-	// Move view left
-	left.mousePressed(moveLeft);
+		room1.size(.07 * width, .3 * height);
+		room2.size(.05 * width, .25 * height);
+		room3.size(.1 * width, .20 * height);
+		room4.size(.1 * width, .20 * height);
+		room5.size(.05 * width, .20 * height);
 
-	// Set goBack mouse press to create museum view
-	goBack.mousePressed(goBackAction)
+
+		room1.position(.035 * width,.4 * height);
+		room2.position(.185 * width,.43 * height);
+		room3.position(.28 * width,.46 * height);
+		room4.position(.78 * width,.46 * height);
+		room5.position(.93 * width,.46 * height);
+
+		room1.mousePressed(changeChris);
+		room2.mousePressed(changeSeb);
+		room3.mousePressed(changeIzetta);
+		room4.mousePressed(changeSte);
+		room5.mousePressed(changeSale);
+
+	}
+	else if(view == izettaRoom){
+		back.mousePressed(goCenter);
+	}
+	else if(view == sebRoom){
+		back.mousePressed(goCenter);
+	}
+	else if(view == chrisRoom){
+		back.mousePressed(goCenter);
+	}
+	else if(view == stephenRoom){
+		back.mousePressed(goCenter);
+	}
+	else if (view == artRoom1){
+		calls++;
+		temp = createImg("https://source.unsplash.com/random/200x200?sig=" + calls);
+		temp.size(.265 *width, .4* height);
+
+		button = createImg("img/blankk.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+
+		temp.position(.35 * width, .18 * height);
+		back.mousePressed(goHallFirst);
+		button.mousePressed(refresh);
+	}
+	else if (view == artRoom2){
+
+
+		textSize(20);
+		text(poem, .35 *width, .2* height, 500, 1000);
+		box
+
+		button = createImg("img/blankk.png");
+		button.size(.11 * width, .23 * height);
+
+		button.position(.70 * width, .35 * height);
+
+
+		back.mousePressed(goHallSecond);
+		button.mousePressed(refresh2);
+
+	}
 }
 
+function refresh2(){
+	if(calls > 30){
+		calls = 0;
+	}
+	getAjax();
+	button.remove();
+	calls++;
+	drawMuseumWindow(artRoom2);
+
+}
+
+function goHallSecond(){
+	button.remove();
+	drawMuseumWindow(museumHall);
+}
+
+function refresh(){
+	temp.remove();
+	button.remove();
+	drawMuseumWindow(artRoom1);
+}
+function changeAPI1(){
+		leftRoom1.remove();
+		leftRoom2.remove();
+		centerRoom.remove();
+		drawMuseumWindow(artRoom1);
+}
+
+function changeAPI2(){
+		leftRoom1.remove();
+		leftRoom2.remove();
+		centerRoom.remove();
+		drawMuseumWindow(artRoom2);
+}
+
+function goHallFirst(){
+	temp.remove();
+	button.remove();
+	drawMuseumWindow(museumHall);
+}
+function goCenter(){
+	drawMuseumWindow(museumCenter);
+}
+function goHall(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+	back.remove();
+	drawMuseumWindow(museumHall);
+}
+function goEntrance(){
+	inMuseum = false;
+	back.remove();
+	leftRoom1.remove();
+	leftRoom2.remove();
+	centerRoom.remove();
+	drawMainWindow(true, 0);
+}
+
+
+function changeSte(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+	drawMuseumWindow(stephenRoom);
+}
+
+function changeSeb(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+	drawMuseumWindow(sebRoom);
+}
+
+function changeIzetta(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+	drawMuseumWindow(izettaRoom);
+}
+
+function changeChris(){
+	room1.remove();
+	room2.remove();
+	room3.remove();
+	room4.remove();
+
+	drawMuseumWindow(chrisRoom);
+}
+
+function changeToCenterRoom() {
+	leftRoom1.remove();
+	leftRoom2.remove();
+	centerRoom.remove();
+	drawMuseumWindow(museumCenter)
+}
+
+function goInRoom(src, dst){
+	image(dst, 0, 0, windowWidth, windowHeight);
+}
 
 function moveRight() {
 	console.log("RIGHT");
