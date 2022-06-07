@@ -134,7 +134,7 @@ function drawMainWindow(isSetup, color) {
 	var h = windowHeight;
 
 	// Sets background color
-	//background(color);
+	background(color);
 	if (isSetup){
 		startScreen = createImg("img/entrance.jpg");
 		startScreen.size(w, h);
@@ -219,7 +219,7 @@ function drawMuseumWindow( view=museumHall) {
 		room4 = createImg("img/blank.png");
 		room5 = createImg("img/blank.png");
 
-		musicBox = createImg("img/blank.jpg");
+		musicBox = createImg("img/blank.png");
 
 		room1.size(.07 * width, .3 * height);
 		room2.size(.05 * width, .25 * height);
